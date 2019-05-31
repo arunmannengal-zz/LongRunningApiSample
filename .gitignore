@@ -3,3 +3,15 @@
 ################################################################################
 
 /.vs/LongRunningApi/DesignTimeBuild
+/.vs/LongRunningApi/v16/Server/sqlite3
+/.vs/LongRunningApi/v16
+/.vs/CodeNav.json
+/.vs/LongRunningApi/config
+/Libraries/obj
+/Libraries/bin/Debug/netstandard2.0
+/LongRunningApi/bin/Debug/netcoreapp2.1
+/LongRunningApi/obj/Debug/netcoreapp2.1
+/LongRunningApi/obj
+/LongRunningApi/Properties/launchSettings.json
+/WorkerService/bin/Debug/netcoreapp2.2
+/WorkerService/obj
