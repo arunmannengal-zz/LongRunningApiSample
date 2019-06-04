@@ -26,7 +26,8 @@ namespace WorkerService
         {
             var workerId = Guid.NewGuid().ToString();
             Console.WriteLine("*****************************************************");
-            Console.WriteLine("Starting Worker Service: " + workerId);
+            Console.WriteLine("**** Starting Worker Service: " + workerId);
+            Console.WriteLine("*****************************************************");
 
             var storageConnectionString = ConfigurationManager.AppSettings["StorageConnectionString"];
             var taskHubName = ConfigurationManager.AppSettings["TaskHubName"];
@@ -58,6 +59,7 @@ namespace WorkerService
             while (true)
             {
                 Thread.Sleep(1000);
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("Working: " + DateTime.Now.ToString());
             }
         }
@@ -66,7 +68,7 @@ namespace WorkerService
         {
             _ = await taskHubWorker.StartAsync().ConfigureAwait(true);
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("Worker Started");
+            Console.WriteLine("Worker Initialized ....");
         }
     }
 }
