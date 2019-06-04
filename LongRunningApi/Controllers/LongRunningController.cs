@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DurableTask.Core;
+﻿using DurableTask.Core;
+
 using Libraries.Orchestrations;
+
 using LongRunningApi.Models;
 using LongRunningApi.TaskHub;
+
 using Microsoft.AspNetCore.Mvc;
+
+using System;
+using System.Threading.Tasks;
 
 namespace LongRunningApi.Controllers
 {
