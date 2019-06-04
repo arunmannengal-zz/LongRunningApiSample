@@ -15,10 +15,7 @@ namespace WorkerService
         private static void Main(string[] args)
         {
             var taskList = new List<Task>();
-            for (int i = 0; i < 1; i++)
-            {
-                taskList.Add(StartWorker());
-            }
+            taskList.Add(StartWorker());
 
             Task.WaitAll(taskList.ToArray());
         }
@@ -26,7 +23,7 @@ namespace WorkerService
         private static async Task StartWorker()
         {
             var workerId = Guid.NewGuid().ToString();
-            Console.WriteLine("***********************************************");
+            Console.WriteLine("*****************************************************");
             Console.WriteLine("Starting Worker Service: " + workerId);
 
             var storageConnectionString = ConfigurationManager.AppSettings["StorageConnectionString"];
@@ -40,7 +37,10 @@ namespace WorkerService
             };
 
             IOrchestrationService orchestrationService = new AzureStorageOrchestrationService(azureStorageOrchestrationSetting);
+            IOrchestrationServiceClient orchestrationServiceClient = new AzureStorageOrchestrationService(azureStorageOrchestrationSetting);
+
             var taskHubWorker = new TaskHubWorker(orchestrationService);
+            var taskHubClient = new TaskHubClient(orchestrationServiceClient);
 
             _ = taskHubWorker.AddTaskOrchestrations(typeof(ModelValidationOrchestration));
             _ = taskHubWorker.AddTaskActivities(typeof(ExtractInterfacesActivity));
@@ -48,9 +48,23 @@ namespace WorkerService
 
             await orchestrationService.CreateIfNotExistsAsync().ConfigureAwait(true);
 
-            _ = await taskHubWorker.StartAsync().ConfigureAwait(true);
+            Task.Run(async () =>
+            {
+                await Start(taskHubWorker).ConfigureAwait(true);
+            }).Wait();
 
-            Console.WriteLine("Executing Work..." + workerId);
+            while (true)
+            {
+                Thread.Sleep(1000);
+                Console.WriteLine("Working: " + DateTime.Now.ToString());
+            }
+        }
+
+        private static async Task Start(TaskHubWorker taskHubWorker)
+        {
+            _ = await taskHubWorker.StartAsync().ConfigureAwait(true);
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Worker Started");
         }
     }
 }

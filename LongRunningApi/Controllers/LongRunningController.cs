@@ -20,7 +20,7 @@ namespace LongRunningApi.Controllers
         private const string storageConnectionString = "UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://127.0.0.1:10002/";
 
         // Read this from Configuration
-        private const string taskHubName = "DeviceServicesHub";
+        private const string taskHubName = "PnPRepoValidation";
 
         public LongRunningController()
         {
